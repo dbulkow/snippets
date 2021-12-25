@@ -32,9 +32,18 @@ red = colors[0]
 green = colors[1]
 blue = colors[2]
 
-start = time.time()
+pattern = [0] * (NUM_LEDS + 10)
+idx = 0
+for i in range(len(pattern)):
+    pattern[i] = colors[idx]
+    if (i > 0) and ((i % 5) == 0):
+        idx = (idx + 1) % 3
 
 while True:
+    # marching color change
+
+    start = time.time()
+
     for i in range(len(led_strip)):
         led_strip[i] = colors[i % 3]
         led_strip.show()
@@ -57,12 +66,9 @@ while True:
         if elapsed > (2 * 60):
             break
 
-    start = time.time()
+    # red chases green back and forth
 
-    for i in range(len(led_strip)):
-        led_strip[i] = green
-        led_strip.show()
-        time.sleep(FAST_SPEED)
+    start = time.time()
 
     while True:
         for i in range(len(led_strip)):
@@ -79,6 +85,22 @@ while True:
         if elapsed > (2 * 60):
             break
 
+    # multi-color transition
+
+    start = time.time()
+
+    for i in range(len(led_strip)):
+        led_strip[i] = colors[i % 3]
+        led_strip.show()
+        time.sleep(FAST_SPEED)
+
+    for i in range(len(led_strip)):
+        led_strip[i] = 0
+        led_strip.show()
+        time.sleep(FAST_SPEED)
+
+    # red replaces green
+
     start = time.time()
 
     while True:
@@ -96,12 +118,9 @@ while True:
         if elapsed > (2 * 60):
             break
 
-    start = time.time()
+    # red runner back and forth
 
-    for i in range(len(led_strip)):
-        led_strip[i] = green
-        led_strip.show()
-        time.sleep(FAST_SPEED)
+    start = time.time()
 
     while True:
         for i in range(len(led_strip)-1):
@@ -125,3 +144,23 @@ while True:
         elapsed = time.time() - start
         if elapsed > (45):
             break
+
+    # rolling pattern
+
+    start = time.time()
+
+    while True:
+        for ii in range(len(pattern)):
+            for i in range(len(led_strip)):
+                led_strip[i] = pattern[(i + ii) % len(pattern)]
+            led_strip.show()
+            time.sleep(SPEED)
+
+        elapsed = time.time() - start
+        if elapsed > (2 * 60):
+            break
+
+    for i in reversed(range(len(led_strip))):
+        led_strip[i] = 0
+        led_strip.show()
+        time.sleep(SPEED)
