@@ -9,7 +9,7 @@ import time
 NUM_LEDS = 50
 
 # Set up brightness (between 0 and 1)
-BRIGHTNESS = 0.2
+BRIGHTNESS = 0.35
 
 # Set up speed (wait time between colour changes, in seconds)
 SPEED = 0.1
@@ -61,6 +61,8 @@ while True:
 
     for i in range(len(led_strip)):
         led_strip[i] = green
+        led_strip.show()
+        time.sleep(FAST_SPEED)
 
     while True:
         for i in range(len(led_strip)):
@@ -98,6 +100,8 @@ while True:
 
     for i in range(len(led_strip)):
         led_strip[i] = green
+        led_strip.show()
+        time.sleep(FAST_SPEED)
 
     while True:
         for i in range(len(led_strip)-1):
